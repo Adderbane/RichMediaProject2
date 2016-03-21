@@ -210,10 +210,10 @@ app.main = {
 		
 		//Player game variables
         player.health = 3;
-		player.speed = 50;
+		player.speed = 100;
 		player.fireDelay = 1;
 		
-		//Player control variables;
+		//Player control variables
 		player.readyFire = true;
 		player.fireTimer = 0;
          
@@ -238,6 +238,12 @@ app.main = {
 			}
 			
 			//Check for collisions
+			if(this.width/2.0 + this.posX >= app.main.WIDTH){
+				this.posX = app.main.WIDTH - this.width/2;
+			}
+			else if(this.posX - this.width/2 <= 0){
+				this.posX = this.width/2;
+			}
 		}
 		
 		//Fire logic, can only be called once per fireDelay seconds

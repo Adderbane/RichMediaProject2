@@ -40,7 +40,7 @@ window.addEventListener("keyup",function(e){
 			app.main.pauseGame();
 		}
 	}
-	if (char == "d" || char == "D") {
+	if (char == "B" || char == "b") {
 	    app.main.toggleDebug();
 	}
 });
