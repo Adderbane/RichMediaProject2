@@ -84,8 +84,15 @@ app.main = {
 	 	var dt = this.calculateDeltaTime();
 	 	 
 	 	// 4) UPDATE
-	    // move circles
-	 	this.checkForCollisions();
+	    if (this.gameState == this.GAME_STATE.BEGIN) {
+		    
+		}
+		else if (this.gameState == this.GAME_STATE.PLAY) {
+		    this.player.update(dt);
+		}
+		else if (this.gameState == this.GAME_STATE.OVER) {
+		    
+		}
 
 		// 5) DRAW	
 		// i) draw background
@@ -194,19 +201,67 @@ app.main = {
 
     makePlayer: function () {
         var player = new Object();
-
+		
+		//Player drawing variables
         player.posX = this.WIDTH/2;
         player.posY = this.HEIGHT - 50;
+		player.width = 30;
+		player.height = 30;
+		
+		//Player game variables
         player.health = 3;
-        
+		player.speed = 50;
+		player.fireDelay = 1;
+		
+		//Player control variables;
+		player.readyFire = true;
+		player.fireTimer = 0;
+         
+		//Update the player
+		player.update = function(dt){
+			//Input
+			if(myKeys.keydown[65]){
+				this.posX -= this.speed * dt;
+			}
+			if(myKeys.keydown[68]){
+				this.posX += this.speed * dt;
+			}
+			if(myKeys.keydown[74]){
+				this.fire();
+			}
+			
+			//Update firing
+			if(!this.readyFire) this.fireTimer += dt;
+			if (this.fireTimer >= this.fireDelay){
+				this.fireTimer = 0;
+				this.readyFire = true;
+			}
+			
+			//Check for collisions
+		}
+		
+		//Fire logic, can only be called once per fireDelay seconds
+		player.fire = function (){
+			if (this.readyFire){
+				//Fire
+				console.log("Pew pew pew");
+				this.fireTimer = 0;
+				this.readyFire = false;
+			}
+		}
+		
+		//Draw the player
         player.draw = function (ctx) {
             ctx.save();
+			ctx.translate(this.posX, this.posY);
             ctx.fillStyle = "white";
             ctx.globalAlpha = "1.0";
-            ctx.fillRect(this.posX, this.posY, 30, 30);
+            ctx.fillRect(-15, -15, this.width, this.height);
             ctx.restore();
         }
-
+		
+		Object.seal(player);
+		
         return player;
     }
 
