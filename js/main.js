@@ -38,6 +38,8 @@ app.main = {
 
     //Modules
     //sound: undefined,
+	enemies: undefined,
+	bullets: undefined,
 
     // methods
 	init : function() {
@@ -50,6 +52,8 @@ app.main = {
 		
 	    //Initialize game
 		this.player = this.makePlayer();
+		this.enemies = app.enemies;
+		this.bullets = app.bullets;
 
 	    //Hook up mouse
 		this.canvas.onmousedown = this.doMousedown.bind(this);
@@ -210,7 +214,7 @@ app.main = {
 		
 		//Player game variables
         player.health = 3;
-		player.speed = 100;
+		player.speed = 300;
 		player.fireDelay = 1;
 		
 		//Player control variables
@@ -250,7 +254,7 @@ app.main = {
 		player.fire = function (){
 			if (this.readyFire){
 				//Fire
-				console.log("Pew pew pew");
+				app.main.bullets.spawnBullet(this.posX, this.posY + this.height);
 				this.fireTimer = 0;
 				this.readyFire = false;
 			}
