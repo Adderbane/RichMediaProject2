@@ -7,8 +7,8 @@ var app = app || {};
 app.enemies = (function(){
 	
 	//Enemy variables
-	var startHealth: 1;
-	var speed: 50;
+	var startHealth = 1;
+	var speed = 50;
 	
 	//Enemy methods
 	function init(){
@@ -17,6 +17,6 @@ app.enemies = (function(){
 	
 	//Export interface
 	return {
-		init: init;
+		init: init,
 	};
 }());

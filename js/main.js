@@ -54,6 +54,7 @@ app.main = {
 		this.player = this.makePlayer();
 		this.enemies = app.enemies;
 		this.bullets = app.bullets;
+		this.bullets.init();
 
 	    //Hook up mouse
 		this.canvas.onmousedown = this.doMousedown.bind(this);
@@ -93,6 +94,7 @@ app.main = {
 		}
 		else if (this.gameState == this.GAME_STATE.PLAY) {
 		    this.player.update(dt);
+			this.bullets.update(dt);
 		}
 		else if (this.gameState == this.GAME_STATE.OVER) {
 		    
@@ -109,6 +111,7 @@ app.main = {
 		}
 		else if (this.gameState == this.GAME_STATE.PLAY) {
 		    this.player.draw(this.ctx);
+			this.bullets.draw(this.ctx);
 		}
 		else if (this.gameState == this.GAME_STATE.OVER) {
 		    this.drawOver(this.ctx);
@@ -215,7 +218,7 @@ app.main = {
 		//Player game variables
         player.health = 3;
 		player.speed = 300;
-		player.fireDelay = 1;
+		player.fireDelay = .5;
 		
 		//Player control variables
 		player.readyFire = true;
@@ -254,7 +257,7 @@ app.main = {
 		player.fire = function (){
 			if (this.readyFire){
 				//Fire
-				app.main.bullets.spawnBullet(this.posX, this.posY + this.height);
+				app.main.bullets.spawnBullet(this.posX, this.posY - this.height);
 				this.fireTimer = 0;
 				this.readyFire = false;
 			}

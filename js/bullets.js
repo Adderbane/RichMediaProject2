@@ -6,8 +6,8 @@ var app = app || {};
 
 app.bullets = (function(){
 	
-	var bullets: undefined;
-	var speed: ;
+	var bullets = undefined;
+	var speed = 300;
 	
 	//Methods
 	function init(){
@@ -22,7 +22,7 @@ app.bullets = (function(){
 	function update(dt){
 		for(var i = 0; i < bullets.length; i++){
 			if(bullets[i].active){
-				bullets[i].posY -= this.bullets.speed * dt;
+				bullets[i].posY -= speed * dt;
 				if(bullets[i].posY <= 0) bullets[i].active = false;
 			}
 		}
@@ -32,7 +32,7 @@ app.bullets = (function(){
 		for(var i = 0; i < bullets.length; i++){
 			if (bullets[i].active){
 				ctx.save();
-				ctx.tranlate(posX, posY);
+				ctx.translate(bullets[i].posX, bullets[i].posY);
 				ctx.fillStyle = "red";
 				ctx.fillRect(-5, 5, 10, 10);
 				ctx.restore();
@@ -42,9 +42,9 @@ app.bullets = (function(){
 	
 	//Export interface
 	return {
-		init: init;
-		spawnBullet: spawnBullet;
-		update: update;
-		draw: draw;
+		init: init,
+		spawnBullet: spawnBullet,
+		update: update,
+		draw: draw
 	};
 }());
