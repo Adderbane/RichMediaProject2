@@ -39,12 +39,17 @@ app.bullets = (function(){
 			}
 		}
 	}
+
+	function getBullets(){
+	    return bullets;
+	}
 	
 	//Export interface
 	return {
-		init: init,
-		spawnBullet: spawnBullet,
-		update: update,
-		draw: draw
+	    init: init,
+	    spawnBullet: spawnBullet,
+	    update: update,
+	    draw: draw,
+	    getBullets: getBullets
 	};
 }());

@@ -120,6 +120,8 @@ app.main = {
 		    this.drawOver(this.ctx);
 		}
 
+		this.checkForCollisions();
+
 		// iii) draw HUD
 		this.drawHUD(this.ctx);
 		
@@ -190,7 +192,8 @@ app.main = {
     checkForCollisions: function () {
 		if (this.gameState == this.GAME_STATE.PLAY) {
 			//check for collisions between bullets and enemies
-			//for(var i = 0; i<)
+		    //for(var i = 0; i<)
+		    console.log(app.main.bullets.getBullets().length);
 		}
        
     },
