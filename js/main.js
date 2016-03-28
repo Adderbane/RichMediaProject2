@@ -55,6 +55,7 @@ app.main = {
 		this.enemies = app.enemies;
 		this.bullets = app.bullets;
 		this.bullets.init();
+		this.enemies.init();
 
 	    //Hook up mouse
 		this.canvas.onmousedown = this.doMousedown.bind(this);
@@ -95,6 +96,7 @@ app.main = {
 		else if (this.gameState == this.GAME_STATE.PLAY) {
 		    this.player.update(dt);
 			this.bullets.update(dt);
+			this.enemies.update(dt);
 		}
 		else if (this.gameState == this.GAME_STATE.OVER) {
 		    
@@ -112,6 +114,7 @@ app.main = {
 		else if (this.gameState == this.GAME_STATE.PLAY) {
 		    this.player.draw(this.ctx);
 			this.bullets.draw(this.ctx);
+			this.enemies.draw(this.ctx);
 		}
 		else if (this.gameState == this.GAME_STATE.OVER) {
 		    this.drawOver(this.ctx);
@@ -185,6 +188,10 @@ app.main = {
     },
 
     checkForCollisions: function () {
+		if (this.gameState == this.GAME_STATE.PLAY) {
+			//check for collisions between bullets and enemies
+			//for(var i = 0; i<)
+		}
        
     },
 
@@ -227,14 +234,18 @@ app.main = {
 		//Update the player
 		player.update = function(dt){
 			//Input
-			if(myKeys.keydown[65]){
+			if(myKeys.keydown[65] || myKeys.keydown[37]){
 				this.posX -= this.speed * dt;
 			}
-			if(myKeys.keydown[68]){
+			if(myKeys.keydown[68] || myKeys.keydown[39]){
 				this.posX += this.speed * dt;
 			}
 			if(myKeys.keydown[74]){
 				this.fire();
+			}
+			
+			if (myKeys.keydown[32]) {
+				app.main.enemies.spawnEnemy(320, 320);
 			}
 			
 			//Update firing
@@ -261,6 +272,7 @@ app.main = {
 				this.fireTimer = 0;
 				this.readyFire = false;
 			}
+
 		}
 		
 		//Draw the player
