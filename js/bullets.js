@@ -29,7 +29,10 @@ app.bullets = (function(){
 		for(var i = 0; i < bullets.length; i++){
 			if(bullets[i].active){
 				bullets[i].posY -= speed * dt;
-				if(bullets[i].posY <= 0) bullets[i].active = false;
+				if (bullets[i].posY <= 0) {
+				    bullets[i].active = false;
+				    app.main.score--;
+				}
 			}
 		}
 	}
@@ -49,7 +52,7 @@ app.bullets = (function(){
 	//takes int = to specific bullet's pos in array
 	//then sets it's active property to false
 	function explode(i){
-		bullets[i].active = false;
+	    bullets[i].active = false;
 	}
 
 	function getBullets(){

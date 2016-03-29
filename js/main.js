@@ -33,13 +33,13 @@ app.main = {
         PLAY: 1,
         OVER: 2,
     }),
-
-    player: undefined,
+    score: 0,
 
     //Modules
     //sound: undefined,
 	enemies: undefined,
 	bullets: undefined,
+	player: undefined,
 
     // methods
 	init : function() {
@@ -94,7 +94,7 @@ app.main = {
 		}
 	    else if (this.gameState == this.GAME_STATE.PLAY) {
             //Spawn enemies
-	        if (myKeys.keydown[32]) {
+	        if (myKeys.keydown[74]) {
 	            app.main.enemies.spawnEnemy(getRandom(50, app.main.WIDTH - 50), -30);
 	        }
 		    this.player.update(dt);
@@ -168,7 +168,7 @@ app.main = {
 
     drawHUD: function (ctx) {
         ctx.save();
-
+        this.fillText(ctx, "Score: " + this.score, 10, 30, "20pt courier", "white");
         ctx.restore();
     },
 
@@ -201,6 +201,7 @@ app.main = {
 							if (bulletEnemyIntersect(bulletArray[i], enemyArray[j])) {
 								app.main.enemies.loseHp(j);
 								app.main.bullets.explode(i);
+								this.score += 5;
 							}
 						}
 					}

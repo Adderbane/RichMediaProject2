@@ -37,7 +37,7 @@ app.player = (function(){
             posY += speed * dt;
         }
 
-        if(myKeys.keydown[74]){
+        if(myKeys.keydown[32]){
             fire();
         }
 			
