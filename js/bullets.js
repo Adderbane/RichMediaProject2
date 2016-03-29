@@ -7,7 +7,7 @@ var app = app || {};
 app.bullets = (function(){
 	
 	var bullets = undefined;
-	var speed = 300;
+	var speed = 400;
 	
 	//Methods
 	function init(){
@@ -15,8 +15,14 @@ app.bullets = (function(){
 	}
 	
 	//Make bullet objects (evil = enemy bullet)
-	function spawnBullet(x,y){
-		bullets.push({posX:x, posY:y, active: true, evil: false, radius: 5});
+	function spawnBullet(x, y) {
+	    for (var i = 0; i < bullets.length; i++) {
+	        if (bullets[i].active == false) {
+	            bullets[i] = { posX: x, posY: y, active: true, evil: false, radius: 5 };
+	            return
+	        }
+	    }
+	    bullets.push({ posX: x, posY: y, active: true, evil: false, radius: 5 });
 	}
 	
 	function update(dt){

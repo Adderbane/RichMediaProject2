@@ -43,7 +43,6 @@ app.main = {
 
     // methods
 	init : function() {
-		console.log("app.main.init() called");
 		// initialize canvas
 		this.canvas = document.querySelector('canvas');
 		this.canvas.width = this.WIDTH;
@@ -51,7 +50,7 @@ app.main = {
 		this.ctx = this.canvas.getContext('2d');
 		
 	    //Initialize game
-		this.player = this.makePlayer();
+		this.player = app.player;
 		this.enemies = app.enemies;
 		this.bullets = app.bullets;
 		this.bullets.init();
@@ -93,7 +92,11 @@ app.main = {
 	    if (this.gameState == this.GAME_STATE.BEGIN) {
 		    
 		}
-		else if (this.gameState == this.GAME_STATE.PLAY) {
+	    else if (this.gameState == this.GAME_STATE.PLAY) {
+            //Spawn enemies
+	        if (myKeys.keydown[32]) {
+	            app.main.enemies.spawnEnemy(getRandom(50, app.main.WIDTH - 50), -30);
+	        }
 		    this.player.update(dt);
 			this.bullets.update(dt);
 			this.enemies.update(dt);
@@ -163,14 +166,6 @@ app.main = {
 	    ctx.restore();
 	},
 
-    circleHitLeftRight: function (c){
-        if (c.x <= c.radius || c.x >= this.WIDTH - c.radius) return true;
-    },
-	
-    circleHitTopBottom: function (c) {
-        if (c.y < c.radius || c.y > this.HEIGHT - c.radius) return true;
-    },
-
     drawHUD: function (ctx) {
         ctx.save();
 
@@ -194,7 +189,6 @@ app.main = {
 			//check for collisions between bullets and enemies
 			var bulletArray = app.main.bullets.getBullets();
 			var enemyArray = app.main.enemies.getEnemies();
-			console.log(bulletArray.length);
 		   
 		   //check for collisions with enemy
 			for(var i = 0; i < bulletArray.length; i++){
@@ -232,83 +226,5 @@ app.main = {
 
     toggleDebug: function () {
         this.debug = !(this.debug);
-    },
-
-    makePlayer: function () {
-        var player = new Object();
-		
-		//Player drawing variables
-        player.posX = this.WIDTH/2;
-        player.posY = this.HEIGHT - 50;
-		player.width = 30;
-		player.height = 30;
-		
-		//Player game variables
-        player.health = 3;
-		player.speed = 300;
-		player.fireDelay = .5;
-		
-		//Player control variables
-		player.readyFire = true;
-		player.fireTimer = 0;
-         
-		//Update the player
-		player.update = function(dt){
-			//Input
-			if(myKeys.keydown[65] || myKeys.keydown[37]){
-				this.posX -= this.speed * dt;
-			}
-			if(myKeys.keydown[68] || myKeys.keydown[39]){
-				this.posX += this.speed * dt;
-			}
-			if(myKeys.keydown[74]){
-				this.fire();
-			}
-			
-			if (myKeys.keydown[32]) {
-				app.main.enemies.spawnEnemy(320, 320);
-			}
-			
-			//Update firing
-			if(!this.readyFire) this.fireTimer += dt;
-			if (this.fireTimer >= this.fireDelay){
-				this.fireTimer = 0;
-				this.readyFire = true;
-			}
-			
-			//Check for collisions
-			if(this.width/2.0 + this.posX >= app.main.WIDTH){
-				this.posX = app.main.WIDTH - this.width/2;
-			}
-			else if(this.posX - this.width/2 <= 0){
-				this.posX = this.width/2;
-			}
-		}
-		
-		//Fire logic, can only be called once per fireDelay seconds
-		player.fire = function (){
-			if (this.readyFire){
-				//Fire
-				app.main.bullets.spawnBullet(this.posX, this.posY - this.height);
-				this.fireTimer = 0;
-				this.readyFire = false;
-			}
-
-		}
-		
-		//Draw the player
-        player.draw = function (ctx) {
-            ctx.save();
-			ctx.translate(this.posX, this.posY);
-            ctx.fillStyle = "white";
-            ctx.globalAlpha = "1.0";
-            ctx.fillRect(-15, -15, this.width, this.height);
-            ctx.restore();
-        }
-		
-		Object.seal(player);
-		
-        return player;
     }
-
 }; // end app.main
