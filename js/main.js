@@ -192,8 +192,26 @@ app.main = {
     checkForCollisions: function () {
 		if (this.gameState == this.GAME_STATE.PLAY) {
 			//check for collisions between bullets and enemies
-		    //for(var i = 0; i<)
-		    console.log(app.main.bullets.getBullets().length);
+			var bulletArray = app.main.bullets.getBullets();
+			var enemyArray = app.main.enemies.getEnemies();
+			console.log(bulletArray.length);
+		   
+		   //check for collisions with enemy
+			for(var i = 0; i < bulletArray.length; i++){
+				//only checks if bullet is active
+				if (bulletArray[i].active) {
+					for(var j = 0; j < enemyArray.length; j++){
+						//only checks if enemy is active
+						if (enemyArray[j].active) {
+							//if intersection is detected, enemy loses hp and bullet becomes inactive
+							if (bulletEnemyIntersect(bulletArray[i], enemyArray[j])) {
+								app.main.enemies.loseHp(j);
+								app.main.bullets.explode(i);
+							}
+						}
+					}
+				}
+			}
 		}
        
     },

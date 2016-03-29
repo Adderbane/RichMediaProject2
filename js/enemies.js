@@ -19,12 +19,13 @@ app.enemies = (function(){
 	//make enemy objects
 	//having speed here allows for enemy objects to travel in different directions
 	function spawnEnemy(x,y){
-		enemies.push({posX:x, posY:y, active: true, speed: speed})
+		enemies.push({posX:x, posY:y, active: true, speed: speed, radius: 20, hp: startHealth})
 		
 	}
-	
-	function die(){
-		
+	//takes int = to specific enemy's pos in array
+	//changes active to false
+	function die(j){
+		enemies[j].active = false;
 	}
 	
 	function update(dt){
@@ -37,6 +38,19 @@ app.enemies = (function(){
 			}
 		}
 		
+	}
+	
+	function getEnemies(){
+		return enemies;
+	}
+	
+	//takes int = to specific enemy's pos in array
+	//then lowers hp of enemy by 1, if hp = 0 calls die function
+	function loseHp(j){
+		enemies[j].hp -=1;
+		if (enemies[j].hp <=0) {
+			this.die(j);
+		}
 	}
 	
 	function draw(ctx) {
@@ -59,6 +73,8 @@ app.enemies = (function(){
 		die: die,
 		spawnEnemy: spawnEnemy,
 		update: update,
-		draw: draw
+		draw: draw,
+		getEnemies: getEnemies,
+		loseHp: loseHp
 	};
 }());

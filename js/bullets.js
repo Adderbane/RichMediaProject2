@@ -16,7 +16,7 @@ app.bullets = (function(){
 	
 	//Make bullet objects (evil = enemy bullet)
 	function spawnBullet(x,y){
-		bullets.push({posX:x, posY:y, active: true, evil: false});
+		bullets.push({posX:x, posY:y, active: true, evil: false, radius: 5});
 	}
 	
 	function update(dt){
@@ -39,6 +39,12 @@ app.bullets = (function(){
 			}
 		}
 	}
+	
+	//takes int = to specific bullet's pos in array
+	//then sets it's active property to false
+	function explode(i){
+		bullets[i].active = false;
+	}
 
 	function getBullets(){
 	    return bullets;
@@ -50,6 +56,7 @@ app.bullets = (function(){
 	    spawnBullet: spawnBullet,
 	    update: update,
 	    draw: draw,
-	    getBullets: getBullets
+	    getBullets: getBullets,
+		explode:explode
 	};
 }());
