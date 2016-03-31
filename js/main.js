@@ -189,7 +189,44 @@ app.main = {
 			//check for collisions between bullets and enemies
 			var bulletArray = app.main.bullets.getBullets();
 			var enemyArray = app.main.enemies.getEnemies();
-		   
+			/*
+			var collisionArray = new Array();
+			
+			//adding active bullets and enemies to collision array
+			for (var i = 0; i < bulletArray.length; i ++) {
+				if (bulletArray[i].active) {
+					collisionArray.push(bulletArray[i]);
+				}
+			}
+			
+			for (var i = 0; i < enemyArray.length; i ++) {
+				if (enemyArray[i].active) {
+					collisionArray.push(enemyArray[i]);
+				}
+			}
+			//looping through collision array to check for collisions
+			for(var i = 0; i < collisionArray.length; i++){
+				//check against all objects stored in array after i
+				if (i + 1 < collisionArray.length) {
+					//store type to check against other objects in array
+					collisionArray
+					
+					for(var j = i+1; j < collisionArray.length; j++){
+						switch(collisionArray[i].getType){
+							case "bullet":
+								if (collisionArray[j].getType() == "enemy") {
+									collisionArray[j].loseHp();
+									collisionArray[i].explode();
+									this.score+=5;
+								}
+								break;
+						}
+					}
+				}
+			}
+		   */
+			
+		   /*
 		   //check for collisions with enemy
 			for(var i = 0; i < bulletArray.length; i++){
 				//only checks if bullet is active
@@ -207,6 +244,36 @@ app.main = {
 					}
 				}
 			}
+			*/
+		   
+		   console.log(this.player.getPosX())
+			//check for collisions with enemy
+			for(var i = 0; i < enemyArray.length; i++){
+				//only checks if enemy is active
+				if (enemyArray[i].active) {
+					for(var j = 0; j < bulletArray.length; j++){
+						//only checks if bullet is active
+						if (bulletArray[j].active) {
+							//if intersection is detected, enemy loses hp and bullet becomes inactive
+							if (bulletEnemyIntersect(bulletArray[j], enemyArray[i])) {
+								this.enemies.loseHp(i);
+								this.bullets.explode(j);
+								this.score += 5;
+								return;
+							}
+						}
+					}
+					
+					//if collision is detected both player and enemy lose hp
+					if (enemyPlayerIntersect(enemyArray[i], this.player)) {
+						this.player.loseHp();
+						this.enemies.loseHp(i);
+						this.score -=2;
+					}
+
+				}
+			}
+			
 		}
        
     },

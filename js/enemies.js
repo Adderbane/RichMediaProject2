@@ -13,6 +13,7 @@ app.enemies = (function(){
 	var enemies = undefined;
 	var width = 40;
 	var height = 40;
+	var type = "enemy";
 	
 	//Enemy methods
 	function init(){
@@ -70,6 +71,7 @@ app.enemies = (function(){
 		}
 	}
 	
+	
 	function draw(ctx) {
 		for(var i = 0; i < enemies.length; i++){
 			if (enemies[i].active) {
@@ -84,6 +86,10 @@ app.enemies = (function(){
 		}
 	}
 	
+	function getType(){
+		return enemy;
+	}
+	
 	//Export interface
 	return {
 		init: init,
@@ -92,6 +98,7 @@ app.enemies = (function(){
 		update: update,
 		draw: draw,
 		getEnemies: getEnemies,
-		loseHp: loseHp
+		loseHp: loseHp,
+		getType: getType
 	};
 }());

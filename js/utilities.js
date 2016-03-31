@@ -40,6 +40,14 @@ function bulletEnemyIntersect(bullet, enemy) {
     return (dx * dx + dy * dy) < distance;
 }
 
+
+function enemyPlayerIntersect(enemy, player) {
+    var dx = player.getPosX() - enemy.posX;
+    var dy = player.getPosY() - enemy.posY;
+    var distance = Math.pow(enemy.radius + player.getRadius(), 2);
+    return (dx * dx + dy * dy) < distance;
+}
+
 // Function Name: getRandomColor()
 // returns a random color of alpha 1.0
 // http://paulirish.com/2009/random-hex-color-code-snippets/

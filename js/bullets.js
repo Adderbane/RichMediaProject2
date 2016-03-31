@@ -8,6 +8,7 @@ app.bullets = (function(){
 	
 	var bullets = undefined;
 	var speed = 400;
+	var type = "bullet";
 	
 	//Methods
 	function init(){
@@ -59,6 +60,10 @@ app.bullets = (function(){
 	    return bullets;
 	}
 	
+	function getType(){
+		return type;
+	}
+	
 	//Export interface
 	return {
 	    init: init,
@@ -66,6 +71,7 @@ app.bullets = (function(){
 	    update: update,
 	    draw: draw,
 	    getBullets: getBullets,
-		explode:explode
+		explode:explode,
+		getType: getType
 	};
 }());

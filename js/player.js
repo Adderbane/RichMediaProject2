@@ -15,6 +15,8 @@ app.player = (function(){
     //Player game variables
     var health = 3;
     var speed = 300;
+	var radius = 15;
+	var type = "player";
     var fireDelay = .25;
 		
     //Player control variables
@@ -48,7 +50,7 @@ app.player = (function(){
             readyFire = true;
         }
 			
-        //Check for collisions
+        //Check for collisions with wall
         if(width/2.0 + posX >= app.main.WIDTH){
             posX = app.main.WIDTH - width/2;
         }
@@ -84,9 +86,37 @@ app.player = (function(){
         ctx.restore();
     }
 	
+	function getType(){
+		return type;
+	}
+	
+	function loseHp(){
+		health -=1;
+		if (health <= 0){
+			app.main.gameState = app.main.GAME_STATE.OVER;
+		}
+	}
+	
+	function getRadius() {
+		return radius;
+	}
+	
+	function getPosX() {
+		return posX;
+	}
+	
+	function getPosY(){
+		return posY;
+	}
+	
 	//Export interface
 	return {
-		update: update,
-		draw: draw
+		update:update,
+		draw:draw,
+		getType:getType,
+		getRadius:getRadius,
+		getPosX:getPosX,
+		getPosY:getPosY,
+		loseHp:loseHp
 	};
 }());
