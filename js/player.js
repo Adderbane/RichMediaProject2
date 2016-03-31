@@ -9,9 +9,11 @@ app.player = (function(){
     //Player drawing variables
     var posX = app.main.WIDTH/2;
     var posY = app.main.HEIGHT - 50;
-    var width = 30;
-    var height = 30;
-		
+    var width = 50;
+    var height = 50;
+    var sprite = new Image();
+    sprite.src = 'media/blueship.png';
+    
     //Player game variables
     var health = 3;
     var speed = 300;
@@ -22,7 +24,12 @@ app.player = (function(){
     //Player control variables
     var readyFire = true;
     var fireTimer = 0;
-         
+    
+    //Initialize
+    function init() {
+        radius = (width + height) / 4;
+    }
+
     //Update the player
     function update(dt){
         //Input
@@ -80,9 +87,9 @@ app.player = (function(){
     function draw(ctx) {
         ctx.save();
         ctx.translate(posX, posY);
-        ctx.fillStyle = "white";
         ctx.globalAlpha = "1.0";
-        ctx.fillRect(-15, -15, width, height);
+        ctx.rotate(-1 * Math.PI / 2);
+        ctx.drawImage(sprite, -height/2, -width/2, width, height);
         ctx.restore();
     }
 	

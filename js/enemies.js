@@ -14,6 +14,8 @@ app.enemies = (function(){
 	var width = 40;
 	var height = 40;
 	var type = "enemy";
+	var sprite = new Image();
+	sprite.src = 'media/alien.png';
 	
 	//Enemy methods
 	function init(){
@@ -41,10 +43,12 @@ app.enemies = (function(){
 
 	//takes int = to specific enemy's pos in array
 	//changes active to false
-	function die(j){
+	function die(j) {
+	    app.main.explosions.spawnExp(enemies[j].posX, enemies[j].posY);
 		enemies[j].active = false;
 	}
 	
+    //Update enemies
 	function update(dt){
 		for(var i = 0; i < enemies.length; i++){
 			if (enemies[i].active) {
@@ -52,6 +56,9 @@ app.enemies = (function(){
 			    enemies[i].posY += enemies[i].ySpeed * dt;
 				if (enemies[i].posX+width/2 > app.main.WIDTH || enemies[i].posX-width/2 < 0) {
 					enemies[i].xSpeed *= -1;
+				}
+				if (enemies[i].posY - height / 2 > app.main.HEIGHT) {
+				    enemies[i].active = false;
 				}
 			}
 		}
@@ -71,16 +78,13 @@ app.enemies = (function(){
 		}
 	}
 	
-	
+	//Draw enemies
 	function draw(ctx) {
 		for(var i = 0; i < enemies.length; i++){
 			if (enemies[i].active) {
 				ctx.save();
 				ctx.translate(enemies[i].posX, enemies[i].posY);
-				ctx.fillStyle = "yellow";
-				ctx.strokeStyle = "white";
-				ctx.fillRect(-width/2, -height/2, width, height);
-				ctx.strokeRect(-width / 2, -height / 2, width, height);
+				ctx.drawImage(sprite, -width/2, -height/2, width, height);
 				ctx.restore();
 			}
 		}

@@ -40,6 +40,7 @@ app.main = {
 	enemies: undefined,
 	bullets: undefined,
 	player: undefined,
+    explosions: undefined,
 
     // methods
 	init : function() {
@@ -53,8 +54,10 @@ app.main = {
 		this.player = app.player;
 		this.enemies = app.enemies;
 		this.bullets = app.bullets;
+		this.explosions = app.explosions;
 		this.bullets.init();
 		this.enemies.init();
+		this.explosions.init();
 
 	    //Hook up mouse
 		this.canvas.onmousedown = this.doMousedown.bind(this);
@@ -100,6 +103,7 @@ app.main = {
 		    this.player.update(dt);
 			this.bullets.update(dt);
 			this.enemies.update(dt);
+			this.explosions.update(dt);
 		}
 		else if (this.gameState == this.GAME_STATE.OVER) {
 		    
@@ -118,6 +122,7 @@ app.main = {
 		    this.player.draw(this.ctx);
 			this.bullets.draw(this.ctx);
 			this.enemies.draw(this.ctx);
+			this.explosions.draw(this.ctx);
 		}
 		else if (this.gameState == this.GAME_STATE.OVER) {
 		    this.drawOver(this.ctx);
@@ -163,6 +168,16 @@ app.main = {
 	    ctx.textAlign = "center";
 	    ctx.textBaseline = "middle";
 	    this.fillText(this.ctx, "...PAUSED...", this.WIDTH/2, this.HEIGHT/2, "40pt courier", "white");
+	    ctx.restore();
+	},
+
+	drawOver: function(ctx){
+	    ctx.save();
+	    ctx.fillStyle = "black";
+	    ctx.fillRect(0,0, this.WIDTH, this.HEIGHT);
+	    ctx.textAlign = "center";
+	    ctx.textBaseline = "middle";
+	    this.fillText(this.ctx, "GAME OVER", this.WIDTH/2, this.HEIGHT/2, "40pt courier", "white");
 	    ctx.restore();
 	},
 
@@ -246,7 +261,7 @@ app.main = {
 			}
 			*/
 		   
-		   console.log(this.player.getPosX())
+		   if (this.debug) console.log(this.player.getPosX())
 			//check for collisions with enemy
 			for(var i = 0; i < enemyArray.length; i++){
 				//only checks if enemy is active
