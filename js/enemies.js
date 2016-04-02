@@ -45,6 +45,7 @@ app.enemies = (function(){
 	//changes active to false
 	function die(j) {
 	    app.main.explosions.spawnExp(enemies[j].posX, enemies[j].posY);
+		createjs.Sound.play("explosionSound");
 		enemies[j].active = false;
 	}
 	

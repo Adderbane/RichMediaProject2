@@ -79,6 +79,7 @@ app.player = (function(){
             app.main.bullets.spawnBullet(posX, posY - height);
             fireTimer = 0;
             readyFire = false;
+			createjs.Sound.play("fireSound");
         }
 
     }

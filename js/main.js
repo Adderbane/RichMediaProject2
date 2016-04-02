@@ -25,6 +25,7 @@ app.main = {
    	paused: false,
    	debug: false,
     animationID: 0,
+	soundtrack: undefined,
 
     //Game properties
     gameState: undefined,
@@ -58,15 +59,21 @@ app.main = {
 		this.bullets.init();
 		this.enemies.init();
 		this.explosions.init();
-
+		
+		createjs.Sound.play("explosionSound");
+		
 	    //Hook up mouse
 		this.canvas.onmousedown = this.doMousedown.bind(this);
 
+		
+		
         //Load level
         this.reset();
 
 		// start the game loop
 		this.update();
+		
+		
 	},
 
 	reset: function(pass) {

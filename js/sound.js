@@ -13,6 +13,9 @@ app.sound = (function(){
 	var currentDirection = 1;
 	var effectSounds = ["1.mp3","2.mp3","3.mp3","4.mp3","5.mp3","6.mp3","7.mp3","8.mp3"];
 	
+	//var explosionSound = "explosion2.mp3";
+	//var fireSound = "laserBlast.mp3";
+	
 
 	function init(){
 		bgAudio = document.querySelector("#bgAudio");
