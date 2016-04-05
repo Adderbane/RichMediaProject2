@@ -27,6 +27,10 @@ app.main = {
     animationID: 0,
 	soundtrack: undefined,
 
+    //BG
+	background: undefined,
+	bgOffset: 0,
+
     //Game properties
     gameState: undefined,
     GAME_STATE: Object.freeze({
@@ -59,7 +63,10 @@ app.main = {
 		this.bullets.init();
 		this.enemies.init();
 		this.explosions.init();
-		
+
+        //Background
+		this.background = new Image();
+		this.background.src = 'media/stars.jpg';
 		createjs.Sound.play("explosionSound");
 		
 	    //Hook up mouse
@@ -105,9 +112,9 @@ app.main = {
 	    }
 	    else if (this.gameState == this.GAME_STATE.PLAY) {
             //Spawn enemies
-	        if (myKeys.keydown[74]) {
-	            app.main.enemies.spawnEnemy(getRandom(50, app.main.WIDTH - 50), -30);
-	        }
+	        //if (myKeys.keydown[74]) {
+	            //app.main.enemies.spawnEnemy(getRandom(50, app.main.WIDTH - 50), -30);
+	        //}
 		    this.player.update(dt);
 			this.bullets.update(dt);
 			this.enemies.update(dt);
@@ -121,6 +128,11 @@ app.main = {
 		// i) draw background
 		this.ctx.fillStyle = "black"; 
 		this.ctx.fillRect(0, 0, this.WIDTH, this.HEIGHT);
+		this.drawBG(this.ctx);
+		this.bgOffset--;
+		if (this.bgOffset == -402) {
+		    this.bgOffset = 0;
+		}
 	
 	    //Draw
 		if (this.gameState == this.GAME_STATE.BEGIN) {
@@ -180,8 +192,6 @@ app.main = {
 
 	drawIntro: function(ctx){
 	    ctx.save();
-	    ctx.fillStyle = "black";
-	    ctx.fillRect(0, 0, this.WIDTH, this.HEIGHT);
 	    ctx.textAlign = "center";
 	    ctx.textBaseline = "middle";
 	    this.fillText(this.ctx, "SPACE BATTLE", this.WIDTH / 2, (this.HEIGHT / 2) - 80, "40pt courier", "white");
@@ -193,12 +203,20 @@ app.main = {
 
 	drawOver: function(ctx){
 	    ctx.save();
-	    ctx.fillStyle = "black";
-	    ctx.fillRect(0,0, this.WIDTH, this.HEIGHT);
 	    ctx.textAlign = "center";
 	    ctx.textBaseline = "middle";
 	    this.fillText(this.ctx, "GAME OVER", this.WIDTH / 2, this.HEIGHT / 2, "40pt courier", "white");
 	    this.fillText(this.ctx, "Click to return to main menu", this.WIDTH / 2, this.HEIGHT / 2 + 40, "20pt courier", "white");
+	    ctx.restore();
+	},
+
+	drawBG: function (ctx) {
+	    ctx.save();
+	    for (var i = 0; i < 2; i++) {
+	        for (var j = -1; j < 2; j++) {
+	            ctx.drawImage(this.background, i * 402, j * 402 - this.bgOffset, 402, 402);
+	        }
+	    }
 	    ctx.restore();
 	},
 

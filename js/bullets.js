@@ -9,6 +9,8 @@ app.bullets = (function(){
 	var bullets = undefined;
 	var speed = 400;
 	var type = "bullet";
+	var sprite = new Image();
+    //sprite.src = 'media/laser.jpg'
 	
 	//Methods
 	function init(){

@@ -15,7 +15,7 @@ app.player = (function(){
     sprite.src = 'media/blueship.png';
     
     //Player game variables
-    var health = 3;
+    var health = 0;
     var speed = 300;
 	var radius = 15;
 	var type = "player";
@@ -30,6 +30,7 @@ app.player = (function(){
         posX = app.main.WIDTH / 2;
         posY = app.main.HEIGHT - 50;
         radius = (width + height) / 4;
+        health = 3;
     }
 
     //Update the player
@@ -92,7 +93,13 @@ app.player = (function(){
         ctx.translate(posX, posY);
         ctx.globalAlpha = "1.0";
         ctx.rotate(-1 * Math.PI / 2);
-        ctx.drawImage(sprite, -height/2, -width/2, width, height);
+        ctx.drawImage(sprite, -height / 2, -width / 2, width, height);
+        ctx.restore();
+        ctx.save();
+        for (var i = 0; i < health; i++) {
+            ctx.fillStyle = "red";
+            ctx.fillRect(70 * i + 20, app.main.HEIGHT - 70, 50, 50);
+        }
         ctx.restore();
     }
 	

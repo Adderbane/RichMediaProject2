@@ -16,6 +16,7 @@ app.enemies = (function(){
 	var type = "enemy";
 	var sprite = new Image();
 	sprite.src = 'media/alien.png';
+	var spawnRate = 960;
 	
 	//Enemy methods
 	function init(){
@@ -64,6 +65,11 @@ app.enemies = (function(){
 			}
 		}
 		
+	    //Spawn enemies
+		if (getRandom(1, 1000) > spawnRate) {
+		    spawnEnemy(getRandom(50, app.main.WIDTH - 50), -30);
+		}
+
 	}
 	
 	function getEnemies(){
