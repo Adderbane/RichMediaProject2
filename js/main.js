@@ -32,7 +32,7 @@ app.main = {
     GAME_STATE: Object.freeze({
         BEGIN: 0,
         PLAY: 1,
-        OVER: 2,
+        OVER: 2
     }),
     score: 0,
 
@@ -64,10 +64,9 @@ app.main = {
 		
 	    //Hook up mouse
 		this.canvas.onmousedown = this.doMousedown.bind(this);
-
 		
-		
-        //Load level
+	    //Load level
+		this.gameState = this.GAME_STATE.BEGIN;
         this.reset();
 
 		// start the game loop
@@ -76,11 +75,13 @@ app.main = {
 		
 	},
 
-	reset: function(pass) {
-	    if (pass) {
-
-	    }
-	    this.gameState = this.GAME_STATE.PLAY;
+	reset: function() {
+	    //Reset game variables
+	    this.bullets.init();
+	    this.player.init();
+	    this.enemies.init();
+	    this.explosions.init();
+	    this.score = 0;
 	},
 	
 	update: function(){
@@ -101,7 +102,7 @@ app.main = {
 	 	// 4) UPDATE
 	    if (this.gameState == this.GAME_STATE.BEGIN) {
 		    
-		}
+	    }
 	    else if (this.gameState == this.GAME_STATE.PLAY) {
             //Spawn enemies
 	        if (myKeys.keydown[74]) {
@@ -130,15 +131,14 @@ app.main = {
 			this.bullets.draw(this.ctx);
 			this.enemies.draw(this.ctx);
 			this.explosions.draw(this.ctx);
+			this.drawHUD(this.ctx);
 		}
 		else if (this.gameState == this.GAME_STATE.OVER) {
 		    this.drawOver(this.ctx);
+		    this.drawHUD(this.ctx);
 		}
 
 		this.checkForCollisions();
-
-		// iii) draw HUD
-		this.drawHUD(this.ctx);
 		
 		// iv) draw debug info
 		if (this.debug){
@@ -178,13 +178,27 @@ app.main = {
 	    ctx.restore();
 	},
 
+	drawIntro: function(ctx){
+	    ctx.save();
+	    ctx.fillStyle = "black";
+	    ctx.fillRect(0, 0, this.WIDTH, this.HEIGHT);
+	    ctx.textAlign = "center";
+	    ctx.textBaseline = "middle";
+	    this.fillText(this.ctx, "SPACE BATTLE", this.WIDTH / 2, (this.HEIGHT / 2) - 80, "40pt courier", "white");
+	    this.fillText(this.ctx, "Movement: WASD or Arrow Keys", this.WIDTH / 2, this.HEIGHT / 2, "20pt courier", "white");
+	    this.fillText(this.ctx, "Fire: Spacebar", this.WIDTH / 2, this.HEIGHT / 2 + 40, "20pt courier", "white");
+	    this.fillText(this.ctx, "Click to begin...", this.WIDTH / 2, (this.HEIGHT / 2) + 80, "20pt courier", "white");
+	    ctx.restore();
+	},
+
 	drawOver: function(ctx){
 	    ctx.save();
 	    ctx.fillStyle = "black";
 	    ctx.fillRect(0,0, this.WIDTH, this.HEIGHT);
 	    ctx.textAlign = "center";
 	    ctx.textBaseline = "middle";
-	    this.fillText(this.ctx, "GAME OVER", this.WIDTH/2, this.HEIGHT/2, "40pt courier", "white");
+	    this.fillText(this.ctx, "GAME OVER", this.WIDTH / 2, this.HEIGHT / 2, "40pt courier", "white");
+	    this.fillText(this.ctx, "Click to return to main menu", this.WIDTH / 2, this.HEIGHT / 2 + 40, "20pt courier", "white");
 	    ctx.restore();
 	},
 
@@ -201,6 +215,14 @@ app.main = {
             this.paused = false;
             this.update();
             return;
+        }
+
+        if (this.gameState == this.GAME_STATE.OVER) {
+            this.gameState = this.GAME_STATE.BEGIN;
+            this.reset();
+        }
+        else if (this.gameState == this.GAME_STATE.BEGIN) {
+            this.gameState = this.GAME_STATE.PLAY;
         }
 
         var mouse = getMouse(e);

@@ -7,8 +7,8 @@ var app = app || {};
 app.player = (function(){
 	
     //Player drawing variables
-    var posX = app.main.WIDTH/2;
-    var posY = app.main.HEIGHT - 50;
+    var posX = 0;
+    var posY = 0;
     var width = 50;
     var height = 50;
     var sprite = new Image();
@@ -27,6 +27,8 @@ app.player = (function(){
     
     //Initialize
     function init() {
+        posX = app.main.WIDTH / 2;
+        posY = app.main.HEIGHT - 50;
         radius = (width + height) / 4;
     }
 
@@ -119,6 +121,7 @@ app.player = (function(){
 	
 	//Export interface
 	return {
+	    init: init,
 		update:update,
 		draw:draw,
 		getType:getType,
