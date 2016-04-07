@@ -119,7 +119,7 @@ app.main = {
 	 	if (this.gameState == this.GAME_STATE.BEGIN) {
 	 	    if (myKeys.keydown[32] && this.ready) {
 	 	        this.gameState = this.GAME_STATE.PLAY;
-	 	        ready = false;
+	 	        this.ready = false;
 	 	        this.timer = 0;
 	 	    }
 	 	}
