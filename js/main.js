@@ -108,7 +108,9 @@ app.main = {
 	 	 
 	 	// 4) UPDATE
 	    if (this.gameState == this.GAME_STATE.BEGIN) {
-		    
+		    if (myKeys.keydown[32]) {
+				this.gameState = this.GAME_STATE.PLAY;
+			}
 	    }
 	    else if (this.gameState == this.GAME_STATE.PLAY) {
             //Spawn enemies
@@ -121,6 +123,10 @@ app.main = {
 			this.explosions.update(dt);
 		}
 		else if (this.gameState == this.GAME_STATE.OVER) {
+			if (myKeys.keydown[32]) {
+				this.gameState = this.GAME_STATE.BEGIN;
+				this.reset();
+			}
 		    
 		}
 

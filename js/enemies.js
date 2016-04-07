@@ -8,7 +8,7 @@ app.enemies = (function(){
 	
 	//Enemy variables
 	var startHealth = 1;
-	var speed = 50;
+	var speed = 70;
 	var speedVary = 10;
 	var enemies = undefined;
 	var width = 40;

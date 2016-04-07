@@ -96,9 +96,15 @@ app.player = (function(){
         ctx.drawImage(sprite, -height / 2, -width / 2, width, height);
         ctx.restore();
         ctx.save();
+		ctx.globalAlpha = "0.5";
         for (var i = 0; i < health; i++) {
             ctx.fillStyle = "red";
-            ctx.fillRect(70 * i + 20, app.main.HEIGHT - 70, 50, 50);
+			ctx.save();
+			ctx.translate(70 * i +20, app.main.HEIGHT - 30);
+			ctx.rotate(-1 * Math.PI / 2);
+			ctx.drawImage(sprite, 0, 0, width, height);
+            //ctx.fillRect(70 * i + 20, app.main.HEIGHT - 70, 50, 50);
+			ctx.restore();
         }
         ctx.restore();
     }
