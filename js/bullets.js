@@ -10,7 +10,7 @@ app.bullets = (function(){
 	var speed = 400;
 	var type = "bullet";
 	var sprite = new Image();
-    //sprite.src = 'media/laser.jpg'
+    sprite.src = 'media/laser.png'
 	
 	//Methods
 	function init(){
@@ -45,8 +45,7 @@ app.bullets = (function(){
 			if (bullets[i].active){
 				ctx.save();
 				ctx.translate(bullets[i].posX, bullets[i].posY);
-				ctx.fillStyle = "red";
-				ctx.fillRect(-5, 5, 10, 10);
+				ctx.drawImage(sprite, -5, -5, 10, 10);
 				ctx.restore();
 			}
 		}

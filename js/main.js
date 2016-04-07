@@ -40,6 +40,11 @@ app.main = {
     }),
     score: 0,
 
+    //Timer (delays state switching
+    timer: 0,
+    delay: 1.5,
+    ready: true,
+
     //Modules
     //sound: undefined,
 	enemies: undefined,
@@ -99,36 +104,44 @@ app.main = {
 	 	// 2) PAUSED?
 	    // if so, bail out of loop
 	 	if (this.paused) {
-	 	    this.drawPauseScreen(this.ctx);
+	 	    if(this.gameState == this.GAME_STATE.PLAY) this.drawPauseScreen(this.ctx);
 	 	    return;
 	 	}
 	 	
 	 	// 3) HOW MUCH TIME HAS GONE BY?
 	 	var dt = this.calculateDeltaTime();
+	 	this.timer += dt;
+	 	if (this.timer >= this.delay) {
+	 	    this.ready = true;
+	 	}
 	 	 
-	 	// 4) UPDATE
-	    if (this.gameState == this.GAME_STATE.BEGIN) {
-		    if (myKeys.keydown[32]) {
-				this.gameState = this.GAME_STATE.PLAY;
-			}
-	    }
-	    else if (this.gameState == this.GAME_STATE.PLAY) {
-            //Spawn enemies
-	        //if (myKeys.keydown[74]) {
-	            //app.main.enemies.spawnEnemy(getRandom(50, app.main.WIDTH - 50), -30);
-	        //}
-		    this.player.update(dt);
-			this.bullets.update(dt);
-			this.enemies.update(dt);
-			this.explosions.update(dt);
-		}
-		else if (this.gameState == this.GAME_STATE.OVER) {
-			if (myKeys.keydown[32]) {
-				this.gameState = this.GAME_STATE.BEGIN;
-				this.reset();
-			}
-		    
-		}
+	    // 4) UPDATE
+	 	if (this.gameState == this.GAME_STATE.BEGIN) {
+	 	    if (myKeys.keydown[32] && this.ready) {
+	 	        this.gameState = this.GAME_STATE.PLAY;
+	 	        ready = false;
+	 	        this.timer = 0;
+	 	    }
+	 	}
+	 	else if (this.gameState == this.GAME_STATE.PLAY && !this.paused) {
+	 	    //Spawn enemies
+	 	    //if (myKeys.keydown[74]) {
+	 	    //app.main.enemies.spawnEnemy(getRandom(50, app.main.WIDTH - 50), -30);
+	 	    //}
+	 	    this.player.update(dt);
+	 	    this.bullets.update(dt);
+	 	    this.enemies.update(dt);
+	 	    this.explosions.update(dt);
+	 	}
+	 	else if (this.gameState == this.GAME_STATE.OVER) {
+	 	    if (myKeys.keydown[32] && this.ready) {
+	 	        this.gameState = this.GAME_STATE.BEGIN;
+	 	        this.reset();
+	 	        this.ready = false;
+	 	        this.timer = 0;
+	 	    }
+
+	 	}
 
 		// 5) DRAW	
 		// i) draw background
@@ -188,8 +201,6 @@ app.main = {
 
 	drawPauseScreen: function(ctx){
 	    ctx.save();
-	    ctx.fillStyle = "black";
-	    ctx.fillRect(0,0, this.WIDTH, this.HEIGHT);
 	    ctx.textAlign = "center";
 	    ctx.textBaseline = "middle";
 	    this.fillText(this.ctx, "...PAUSED...", this.WIDTH/2, this.HEIGHT/2, "40pt courier", "white");
@@ -203,7 +214,7 @@ app.main = {
 	    this.fillText(this.ctx, "SPACE BATTLE", this.WIDTH / 2, (this.HEIGHT / 2) - 80, "40pt courier", "white");
 	    this.fillText(this.ctx, "Movement: WASD or Arrow Keys", this.WIDTH / 2, this.HEIGHT / 2, "20pt courier", "white");
 	    this.fillText(this.ctx, "Fire: Spacebar", this.WIDTH / 2, this.HEIGHT / 2 + 40, "20pt courier", "white");
-	    this.fillText(this.ctx, "Click to begin...", this.WIDTH / 2, (this.HEIGHT / 2) + 80, "20pt courier", "white");
+	    this.fillText(this.ctx, "Press Spacebar to begin...", this.WIDTH / 2, (this.HEIGHT / 2) + 80, "20pt courier", "white");
 	    ctx.restore();
 	},
 
@@ -212,7 +223,7 @@ app.main = {
 	    ctx.textAlign = "center";
 	    ctx.textBaseline = "middle";
 	    this.fillText(this.ctx, "GAME OVER", this.WIDTH / 2, this.HEIGHT / 2, "40pt courier", "white");
-	    this.fillText(this.ctx, "Click to return to main menu", this.WIDTH / 2, this.HEIGHT / 2 + 40, "20pt courier", "white");
+	    this.fillText(this.ctx, "Press Spacebar return to main menu...", this.WIDTH / 2, this.HEIGHT / 2 + 40, "20pt courier", "white");
 	    ctx.restore();
 	},
 
@@ -239,14 +250,6 @@ app.main = {
             this.paused = false;
             this.update();
             return;
-        }
-
-        if (this.gameState == this.GAME_STATE.OVER) {
-            this.gameState = this.GAME_STATE.BEGIN;
-            this.reset();
-        }
-        else if (this.gameState == this.GAME_STATE.BEGIN) {
-            this.gameState = this.GAME_STATE.PLAY;
         }
 
         var mouse = getMouse(e);

@@ -116,7 +116,9 @@ app.player = (function(){
 	function loseHp(){
 		health -=1;
 		if (health <= 0){
-			app.main.gameState = app.main.GAME_STATE.OVER;
+		    app.main.gameState = app.main.GAME_STATE.OVER;
+		    app.main.ready = false;
+		    app.main.timer = 0;
 		}
 	}
 	
