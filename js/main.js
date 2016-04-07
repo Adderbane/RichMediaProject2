@@ -72,7 +72,7 @@ app.main = {
         //Background
 		this.background = new Image();
 		this.background.src = 'media/stars.jpg';
-		createjs.Sound.play("explosionSound");
+		createjs.Sound.play("soundtrack",{loop: -1, volume: 0.5} );
 		
 	    //Hook up mouse
 		this.canvas.onmousedown = this.doMousedown.bind(this);

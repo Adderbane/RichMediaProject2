@@ -27,7 +27,9 @@ window.onload = function(){
     app.main.queue = new createjs.LoadQueue(false);
     app.main.queue.installPlugin(createjs.Sound);
     app.main.queue.loadManifest(manifest);
-	app.main.init();
+    app.main.queue.on("complete", function(e){
+    app.main.init();
+    });
 }
 
 //Stop on blur
