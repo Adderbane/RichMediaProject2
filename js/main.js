@@ -46,7 +46,6 @@ app.main = {
     ready: true,
 
     //Modules
-    //sound: undefined,
 	enemies: undefined,
 	bullets: undefined,
 	player: undefined,
@@ -125,10 +124,6 @@ app.main = {
 	 	    }
 	 	}
 	 	else if (this.gameState == this.GAME_STATE.PLAY && !this.paused) {
-	 	    //Spawn enemies
-	 	    //if (myKeys.keydown[74]) {
-	 	    //app.main.enemies.spawnEnemy(getRandom(50, app.main.WIDTH - 50), -30);
-	 	    //}
 	 	    this.player.update(dt);
 	 	    this.bullets.update(dt);
 	 	    this.enemies.update(dt);
@@ -215,9 +210,9 @@ app.main = {
 	    ctx.textAlign = "center";
 	    ctx.textBaseline = "middle";
 	    this.fillText(this.ctx, "SPACE BATTLE", this.WIDTH / 2, (this.HEIGHT / 2) - 80, "40pt audiowide", "white");
-	    this.fillText(this.ctx, "Movement: WASD or Arrow Keys", this.WIDTH / 2, this.HEIGHT / 2, "20pt courier", "white");
-	    this.fillText(this.ctx, "Fire: Spacebar", this.WIDTH / 2, this.HEIGHT / 2 + 40, "20pt courier", "white");
-	    this.fillText(this.ctx, "Press Spacebar to begin...", this.WIDTH / 2, (this.HEIGHT / 2) + 80, "20pt courier", "white");
+	    this.fillText(this.ctx, "Movement: WASD or Arrow Keys", this.WIDTH / 2, this.HEIGHT / 2, "20pt audiowide", "white");
+	    this.fillText(this.ctx, "Fire: Spacebar", this.WIDTH / 2, this.HEIGHT / 2 + 40, "20pt audiowide", "white");
+	    this.fillText(this.ctx, "Press Spacebar to begin...", this.WIDTH / 2, (this.HEIGHT / 2) + 80, "20pt audiowide", "white");
 	    ctx.restore();
 	},
 
@@ -225,8 +220,8 @@ app.main = {
 	    ctx.save();
 	    ctx.textAlign = "center";
 	    ctx.textBaseline = "middle";
-	    this.fillText(this.ctx, "GAME OVER", this.WIDTH / 2, this.HEIGHT / 2, "40pt courier", "white");
-	    this.fillText(this.ctx, "Press Spacebar return to main menu...", this.WIDTH / 2, this.HEIGHT / 2 + 40, "20pt courier", "white");
+	    this.fillText(this.ctx, "GAME OVER", this.WIDTH / 2, this.HEIGHT / 2, "40pt audiowide", "white");
+	    this.fillText(this.ctx, "Press Spacebar return to main menu...", this.WIDTH / 2, this.HEIGHT / 2 + 40, "20pt audiowide", "white");
 	    ctx.restore();
 	},
 
@@ -242,7 +237,7 @@ app.main = {
 
     drawHUD: function (ctx) {
         ctx.save();
-        this.fillText(ctx, "Score: " + this.score, 10, 30, "20pt courier", "white");
+        this.fillText(ctx, "Score: " + this.score, 10, 30, "20pt audiowide", "white");
         ctx.restore();
     },
 
@@ -259,67 +254,12 @@ app.main = {
     },
 
     checkForCollisions: function () {
-		if (this.gameState == this.GAME_STATE.PLAY) {
+        if (this.gameState == this.GAME_STATE.PLAY) {
+
 			//check for collisions between bullets and enemies
 			var bulletArray = app.main.bullets.getBullets();
 			var enemyArray = app.main.enemies.getEnemies();
-			/*
-			var collisionArray = new Array();
 			
-			//adding active bullets and enemies to collision array
-			for (var i = 0; i < bulletArray.length; i ++) {
-				if (bulletArray[i].active) {
-					collisionArray.push(bulletArray[i]);
-				}
-			}
-			
-			for (var i = 0; i < enemyArray.length; i ++) {
-				if (enemyArray[i].active) {
-					collisionArray.push(enemyArray[i]);
-				}
-			}
-			//looping through collision array to check for collisions
-			for(var i = 0; i < collisionArray.length; i++){
-				//check against all objects stored in array after i
-				if (i + 1 < collisionArray.length) {
-					//store type to check against other objects in array
-					collisionArray
-					
-					for(var j = i+1; j < collisionArray.length; j++){
-						switch(collisionArray[i].getType){
-							case "bullet":
-								if (collisionArray[j].getType() == "enemy") {
-									collisionArray[j].loseHp();
-									collisionArray[i].explode();
-									this.score+=5;
-								}
-								break;
-						}
-					}
-				}
-			}
-		   */
-			
-		   /*
-		   //check for collisions with enemy
-			for(var i = 0; i < bulletArray.length; i++){
-				//only checks if bullet is active
-				if (bulletArray[i].active) {
-					for(var j = 0; j < enemyArray.length; j++){
-						//only checks if enemy is active
-						if (enemyArray[j].active) {
-							//if intersection is detected, enemy loses hp and bullet becomes inactive
-							if (bulletEnemyIntersect(bulletArray[i], enemyArray[j])) {
-								app.main.enemies.loseHp(j);
-								app.main.bullets.explode(i);
-								this.score += 5;
-							}
-						}
-					}
-				}
-			}
-			*/
-		   
 		   if (this.debug) console.log(this.player.getPosX())
 			//check for collisions with enemy
 			for(var i = 0; i < enemyArray.length; i++){
@@ -354,7 +294,6 @@ app.main = {
 
     pauseGame: function(){
         this.paused = true;
-        //this.sound.stopBGAudio();
         cancelAnimationFrame(this.animationID);
         this.update();
     },
@@ -362,7 +301,6 @@ app.main = {
     resumeGame: function() {
         cancelAnimationFrame(this.animationID);
         this.paused = false;
-        //this.sound.playBGAudio();
         this.update();
     },
 

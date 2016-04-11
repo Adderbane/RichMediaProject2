@@ -44,9 +44,6 @@ app.Emitter=function(){
 			var p = {};
 			this._particles.push(_initParticle(this, p, emitterPoint));
 		}
-
-		// log the particles
-		//console.log(this._particles );
 	};
 	
 	p.emitterPoint = function(){

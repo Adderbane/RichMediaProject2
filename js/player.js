@@ -109,6 +109,7 @@ app.player = (function(){
 		
     //Draw the player
     function draw(ctx) {
+        this.exhaust.updateAndDraw(ctx, { x: posX, y: posY + height / 2 - 10 });
         ctx.save();
         ctx.translate(posX, posY);
         ctx.globalAlpha = "1.0";
@@ -123,18 +124,16 @@ app.player = (function(){
 			ctx.translate(70 * i +20, app.main.HEIGHT - 30);
 			ctx.rotate(-1 * Math.PI / 2);
 			ctx.drawImage(sprite, 0, 0, width, height);
-            //ctx.fillRect(70 * i + 20, app.main.HEIGHT - 70, 50, 50);
 			ctx.restore();
         }
         ctx.restore();
-		debugger;
-		this.exhaust.updateAndDraw(ctx, {x:posX, y:posY + height/2 - 10 });
     }
 	
 	function getType(){
 		return type;
 	}
 	
+    //Deal damage
 	function loseHp(){
 		health -=1;
 		if (health <= 0){
