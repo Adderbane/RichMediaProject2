@@ -177,7 +177,7 @@ app.main = {
 		// iv) draw debug info
 		if (this.debug){
 			// draw dt in bottom right corner
-			this.fillText(this.ctx, "dt: " + dt.toFixed(3), this.WIDTH - 150, this.HEIGHT - 10, "18pt courier", "white");
+			this.fillText(this.ctx, "dt: " + dt.toFixed(3), this.WIDTH - 150, this.HEIGHT - 10, "18pt Audiowide", "white");
 		}
 	},
 	
@@ -206,7 +206,7 @@ app.main = {
 	    ctx.save();
 	    ctx.textAlign = "center";
 	    ctx.textBaseline = "middle";
-	    this.fillText(this.ctx, "...PAUSED...", this.WIDTH/2, this.HEIGHT/2, "40pt courier", "white");
+	    this.fillText(this.ctx, "...PAUSED...", this.WIDTH/2, this.HEIGHT/2, "40pt Audiowide", "white");
 	    ctx.restore();
 	},
 
@@ -214,7 +214,7 @@ app.main = {
 	    ctx.save();
 	    ctx.textAlign = "center";
 	    ctx.textBaseline = "middle";
-	    this.fillText(this.ctx, "SPACE BATTLE", this.WIDTH / 2, (this.HEIGHT / 2) - 80, "40pt courier", "white");
+	    this.fillText(this.ctx, "SPACE BATTLE", this.WIDTH / 2, (this.HEIGHT / 2) - 80, "40pt audiowide", "white");
 	    this.fillText(this.ctx, "Movement: WASD or Arrow Keys", this.WIDTH / 2, this.HEIGHT / 2, "20pt courier", "white");
 	    this.fillText(this.ctx, "Fire: Spacebar", this.WIDTH / 2, this.HEIGHT / 2 + 40, "20pt courier", "white");
 	    this.fillText(this.ctx, "Press Spacebar to begin...", this.WIDTH / 2, (this.HEIGHT / 2) + 80, "20pt courier", "white");
