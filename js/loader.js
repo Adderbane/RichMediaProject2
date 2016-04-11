@@ -23,6 +23,8 @@ window.onload = function(){
        {id: "explosionSound", src:"media/explosion2.mp3" },
        {id: "soundtrack", src: "media/Fastest.mp3"}
     ];
+    //debugger;
+    app.Emitter();
     
     app.main.queue = new createjs.LoadQueue(false);
     app.main.queue.installPlugin(createjs.Sound);

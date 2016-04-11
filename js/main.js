@@ -68,6 +68,7 @@ app.main = {
 		this.bullets.init();
 		this.enemies.init();
 		this.explosions.init();
+	
 
         //Background
 		this.background = new Image();
@@ -168,6 +169,8 @@ app.main = {
 		    this.drawOver(this.ctx);
 		    this.drawHUD(this.ctx);
 		}
+		
+
 
 		this.checkForCollisions();
 		

@@ -7,6 +7,9 @@ var app = app || {};
 app.player = (function(){
 	
     //Player drawing variables
+	
+	exhaust: undefined
+	
     var posX = 0;
     var posY = 0;
     var width = 50;
@@ -31,6 +34,23 @@ app.player = (function(){
         posY = app.main.HEIGHT - 50;
         radius = (width + height) / 4;
         health = 3;
+		
+		this.exhaust = new app.Emitter();
+		this.exhaust.red = 225;
+		this.exhaust.green = 50;
+		this.exhaust.minXspeed = -.25;
+		this.exhaust.minYspeed = 1;
+		this.exhaust.maxXspeed = .25;
+		this.exhaust.maxYspeed = 2;
+		this.exhaust.lifetime = 500;
+		this.exhaust.expansionRate = 0.05;
+		this.exhaust.numParticles = 200;
+		this.exhaust.xRange =1;
+		this.exhaust.yRange=0.5;
+		this.exhaust.useCircles = true;
+		this.exhaust.useSquares = false;
+		
+		this.exhaust.createParticles(this.exhaust.emitterPoint());
     }
 
     //Update the player
@@ -107,6 +127,8 @@ app.player = (function(){
 			ctx.restore();
         }
         ctx.restore();
+		debugger;
+		this.exhaust.updateAndDraw(ctx, {x:posX, y:posY + height/2 - 10 });
     }
 	
 	function getType(){
