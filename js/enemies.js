@@ -16,7 +16,7 @@ app.enemies = (function(){
 	var type = "enemy";
 	var sprite = new Image();
 	sprite.src = 'media/alien.png';
-	var spawnRate = 960;
+	var spawnRate = 975;
 	
 	//Enemy methods
 	function init(){
@@ -37,7 +37,8 @@ app.enemies = (function(){
     //Returns an enemy object
 	function genEnemy(x, y)	{
 	    if (Math.floor(Math.random() * 2)) {
-	        return { posX: x, posY: y, active: true, xSpeed: -1 * getRandom(speed - speedVary, speed + speedVary), ySpeed: getRandom(speed - speedVary, speed + speedVary), radius: 20, hp: startHealth };
+			var diffScaling = app.main.score/100;
+	        return { posX: x, posY: y, active: true, xSpeed: -1 * getRandom(speed - speedVary + diffScaling, speed + speedVary + diffScaling), ySpeed: getRandom(speed - speedVary + diffScaling, speed + speedVary + diffScaling), radius: 20, hp: startHealth };
 	    }
 	    else return { posX: x, posY: y, active: true, xSpeed: getRandom(speed - speedVary, speed + speedVary), ySpeed: getRandom(speed - speedVary, speed + speedVary), radius: 20, hp: startHealth };
 	}
@@ -66,7 +67,7 @@ app.enemies = (function(){
 		}
 		
 	    //Spawn enemies
-		if (getRandom(1, 1000) > spawnRate) {
+		if (getRandom(1, 1000) > spawnRate - app.main.score/20) {
 		    spawnEnemy(getRandom(50, app.main.WIDTH - 50), -30);
 		}
 
