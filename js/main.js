@@ -221,7 +221,8 @@ app.main = {
 	    ctx.textAlign = "center";
 	    ctx.textBaseline = "middle";
 	    this.fillText(this.ctx, "GAME OVER", this.WIDTH / 2, this.HEIGHT / 2, "40pt audiowide", "white");
-	    this.fillText(this.ctx, "Press Spacebar return to main menu...", this.WIDTH / 2, this.HEIGHT / 2 + 40, "20pt audiowide", "white");
+		this.fillText(this.ctx, "Made by Matt Beer and Joe Scotchmer", this.WIDTH / 2, this.HEIGHT / 2 + 40, "20pt audiowide", "white");
+	    this.fillText(this.ctx, "Press Spacebar return to main menu...", this.WIDTH / 2, this.HEIGHT / 2 + 80, "20pt audiowide", "white");
 	    ctx.restore();
 	},
 

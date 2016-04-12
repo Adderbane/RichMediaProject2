@@ -32,7 +32,7 @@ function circlesIntersect(c1, c2) {
     var distance = Math.pow(c1.radius + c2.radius, 2);
     return (dx * dx + dy * dy) < distance;
 }
-
+//cheacks for collision between bullet and enemy
 function bulletEnemyIntersect(bullet, enemy) {
     var dx = enemy.posX - bullet.posX;
     var dy = enemy.posY - bullet.posY;
@@ -40,7 +40,7 @@ function bulletEnemyIntersect(bullet, enemy) {
     return (dx * dx + dy * dy) < distance;
 }
 
-
+//checks for collision between player and enemy
 function enemyPlayerIntersect(enemy, player) {
     var dx = player.getPosX() - enemy.posX;
     var dy = player.getPosY() - enemy.posY;

@@ -14,14 +14,12 @@ var manifest;
 var preload;
 
 window.onload = function(){
-    //if (app.main.debug) console.log("window.onload called");
-    //app.sound.init();
-    //app.main.sound = app.sound;
+
     
     manifest = [
-        {id: "fireSound", src: "media/laserBlast.mp3"},
-       {id: "explosionSound", src:"media/explosion2.mp3" },
-       {id: "soundtrack", src: "media/Fastest.mp3"}
+        {id: "fireSound", src: "media/laserBlast.mp3"}, //http://soundbible.com/472-Laser-Blasts.html
+       {id: "explosionSound", src:"media/explosion2.mp3" }, //http://soundbible.com/456-Explosion-2.html
+       {id: "soundtrack", src: "media/Fastest.mp3"} //http://www.newgrounds.com/audio/listen/663687
     ];
     //debugger;
     app.Emitter();
@@ -36,12 +34,11 @@ window.onload = function(){
 
 //Stop on blur
 window.onblur = function () {
-    //if(app.main.debug) console.log("blur at " + Date());
     app.main.pauseGame();
 }
 
 //Go on focus
 window.onfocus = function () {
-    //if (app.main.debug) console.log("focus at " + Date());
+    
     app.main.resumeGame();
 }
